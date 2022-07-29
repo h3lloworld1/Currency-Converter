@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  
+
   width: 700px;
 }
 
@@ -16,7 +16,7 @@ td {
   border: 1px solid #ffffff;
   text-align: left;
   padding: 8px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 th {
@@ -39,4 +39,19 @@ form td:last-child {
 
 form * {
   font-size: 20px;
+}
+
+.edit_button {
+  width: 50px;
+  padding: 2px;
+  margin-left: 11px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.edit_button:hover {
+  background-color: black;
+  color: white;
 }

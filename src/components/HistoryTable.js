@@ -1,9 +1,49 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
+import EditableRow from "./EditableRow";
 
 import classes from "./HistoryTable.module.css";
 
 const HistoryTable = (props) => {
+  const [editState, setEditState] = useState(null);
+
+  const [editedData, setEditedData] = useState({
+    from: "",
+    to: "",
+    amount: Number,
+    convertedAmount: Number,
+  });
+
   const { data } = props;
+
+  const handleEditClick = (event, i) => {
+    event.preventDefault();
+    setEditState(i);
+
+    const formValues = {
+      from: data.from,
+      to: data.to,
+      amount: data.amount,
+      convertedAmount: data.convertedAmount,
+    };
+
+    setEditedData(formValues);
+  };
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fromField = event.target.getAttribute("from");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editedData };
+    newFormData[fromField] = fieldValue;
+
+    setEditedData(newFormData);
+  };
+
+  const onSave = () => {
+    setEditState(null);
+  };
 
   return (
     <div className={classes.table_container}>
@@ -14,15 +54,35 @@ const HistoryTable = (props) => {
             <th>Converted From</th>
             <th>Converted To</th>
             <th>Amount</th>
+            <th>Converted Amount</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {data.map((convertedData, i) => (
-            <tr key={i}>
-              <td>{convertedData.from}</td>
-              <td>{convertedData.to}</td>
-              <td>{convertedData.amount}</td>
-            </tr>
+            <Fragment key={i}>
+              {editState === i ? (
+                <EditableRow
+                  editedData={editedData}
+                  handleEditFormChange={handleEditFormChange}
+                  onSave={onSave}
+                />
+              ) : (
+                <tr>
+                  <td>{convertedData.from}</td>
+                  <td>{convertedData.to}</td>
+                  <td>{convertedData.amount}</td>
+                  <td>
+                    {Math.round(convertedData.convertedAmount * 100) / 100}
+                  </td>
+                  <td className={classes.actions}>
+                    <button className={classes.edit_button} onClick={(event) => handleEditClick(event, i)}>
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              )}
+            </Fragment>
           ))}
         </tbody>
       </table>

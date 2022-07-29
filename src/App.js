@@ -22,7 +22,7 @@ function App() {
   );
 
   const exchangeData = data;
-
+  
   const convertValue = () => {
     setConvertedValue(
       Math.round(converterData.result.convertedAmount * 100) / 100
@@ -34,6 +34,7 @@ function App() {
         from: converterData.result.from,
         to: converterData.result.to,
         amount: converterData.result.amountToConvert,
+        convertedAmount: converterData.result.convertedAmount,
       },
     ]);
   };

@@ -1,0 +1,30 @@
+.editableRow_input1 {
+  width: 140px;
+}
+
+.editableRow_input2 {
+  width: 115px;
+}
+
+.editableRow_input3 {
+  width: 68px;
+}
+
+.editableRow_input4 {
+  width: 160px;
+}
+
+.save_button {
+  width: 50px;
+  padding: 2px;
+  margin-left: 11px;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.save_button:hover {
+  background-color: black;
+  color: white;
+}
