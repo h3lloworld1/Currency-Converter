@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import useFetch from "./components/hooks/useFetch";
 import useFetchConverter from "./components/hooks/useFetchConverter";
+import { dataActions } from "./store/data-slice";
 
 import CurrencyForm from "../src/components/CurrencyRows";
 import HistoryTable from "./components/HistoryTable";
@@ -13,6 +15,8 @@ function App() {
   const [toCurrency, setToCurrency] = useState();
   const [collectedData, setCollectedData] = useState([]);
 
+  const dispatch = useDispatch();
+
   const { data } = useFetch(
     "https://currency-converter18.p.rapidapi.com/api/v1/supportedCurrencies"
   );
@@ -22,7 +26,7 @@ function App() {
   );
 
   const exchangeData = data;
-  
+
   const convertValue = () => {
     setConvertedValue(
       Math.round(converterData.result.convertedAmount * 100) / 100
@@ -37,6 +41,12 @@ function App() {
         convertedAmount: converterData.result.convertedAmount,
       },
     ]);
+
+    dispatch(
+      dataActions.userDataHandler({
+        collectedData,
+      })
+    );
   };
 
   useEffect(() => {

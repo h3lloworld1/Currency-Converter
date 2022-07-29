@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import { useSelector } from "react-redux";
 import EditableRow from "./EditableRow";
 
 import classes from "./HistoryTable.module.css";
@@ -15,15 +16,17 @@ const HistoryTable = (props) => {
 
   const { data } = props;
 
+  // რედაქსიდან მიღებულ მონაცემებს გავუკეთებთ დესტრუქტურიზაციას და data - ს მაგივრად გავმეპავ reduxData - ს
+  const reduxData = useSelector((state) => state.data.someData);
+
   const handleEditClick = (event, i) => {
     event.preventDefault();
     setEditState(i);
-
     const formValues = {
-      from: data.from,
-      to: data.to,
-      amount: data.amount,
-      convertedAmount: data.convertedAmount,
+      from: reduxData.from,
+      to: reduxData.to,
+      amount: reduxData.amount,
+      convertedAmount: reduxData.convertedAmount,
     };
 
     setEditedData(formValues);
@@ -76,7 +79,10 @@ const HistoryTable = (props) => {
                     {Math.round(convertedData.convertedAmount * 100) / 100}
                   </td>
                   <td className={classes.actions}>
-                    <button className={classes.edit_button} onClick={(event) => handleEditClick(event, i)}>
+                    <button
+                      className={classes.edit_button}
+                      onClick={(event) => handleEditClick(event, i)}
+                    >
                       Edit
                     </button>
                   </td>
